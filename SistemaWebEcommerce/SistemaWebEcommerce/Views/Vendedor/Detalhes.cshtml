@@ -1,0 +1,51 @@
+﻿@model SistemaWebEcommerce.Models.Vendedor
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<div class="text-left">
+    <h1 class="display-5">Detalhes do vendedor(a) </h1><h2 class="display-5" style="color: cornflowerblue">@Html.DisplayFor(model => model.Nome)</h2>
+</div>
+<hr />
+<div class="display-ify">
+    <div style="padding: 25px; border-radius: 10px; background-color: dimgrey; color: white; margin-bottom: 20px;">
+        <dl class="">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DataNasc)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DataNasc)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd>
+                <p style="background-color: white; border-radius: 5px; padding: 2px; width: 300px">@Html.DisplayFor(model => model.Email)</p>
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.SalarioBase)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.SalarioBase)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Departamento.Nome)
+            </dd>
+        </dl>
+    </div>
+    <form asp-action="Detalhes">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Editar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-dark">Voltar para a lista</a>
+    </form>
+</div>

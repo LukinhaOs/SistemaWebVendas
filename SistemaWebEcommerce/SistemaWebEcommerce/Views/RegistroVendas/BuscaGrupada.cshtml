@@ -1,0 +1,75 @@
+﻿@model IEnumerable<IGrouping<Departamento, RegistroVenda>>
+    
+@{
+    ViewData["Title"] = "Busca Agrupada";
+    DateTime minDate = DateTime.Parse(ViewData["minDate"] as string);
+    DateTime maxDate = DateTime.Parse(ViewData["maxDate"] as string);
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<nav>
+    <div>
+        <form>
+            <div>
+                <div>
+                    <label for="minDate">Data mínima</label>
+                    <input type="date" class="form-control" name="minDate" value=@ViewData["minDate"]>
+                </div>
+                <div>
+                    <label for="maxDate">Data máxima</label>
+                    <input type="date" class="form-control" name="maxDate" value=@ViewData["maxDate"]>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+    </div>
+</nav>
+
+@foreach (var departamentoGroup in Model)
+{
+    <div>
+        <div>
+            <h3>Departamento @departamentoGroup.Key.Nome, Total de Vendas = R$@departamentoGroup.Key.TotalVendas(minDate, maxDate).ToString("F2")</h3>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Data
+                        </th>
+                        <th>
+                            Preço R$
+                        </th>
+                        <th>
+                            Vendedor
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in departamentoGroup)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantia)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Vendedor.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modetelItem => item.Status)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>            
+}

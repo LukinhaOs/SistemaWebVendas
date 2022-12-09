@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SistemaWebEcommerce.Data;
+using Microsoft.EntityFrameworkCore;
+using SistemaWebEcommerce.Services;
 
 namespace SistemaWebEcommerce
 {
@@ -31,16 +34,25 @@ namespace SistemaWebEcommerce
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<SistemaWebEmcommerceContext>(options =>
+            options.UseMySql(Configuration.GetConnectionString("SistemaWebEmcommerceContext"), builder =>
+            builder.MigrationsAssembly("SistemaWebEcommerce")));
+
+            services.AddScoped<SeedingService>();
+            services.AddScoped<VendedorService>();
+            services.AddScoped<DepartamentoService>();
+            services.AddScoped<RegistroVendasService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                seedingService.Seed();
             }
             else
             {
